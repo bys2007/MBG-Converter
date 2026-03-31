@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MBG Converter — Bandingkan Asetmu dengan Program Makan Bergizi Gratis</title>
+  <meta name="description" content="Hitung berapa lama aset impianmu bisa membiayai program Makan Bergizi Gratis (MBG) Indonesia. Bandingkan crypto, saham, properti, dan barang mewah dengan anggaran MBG Rp1,2 Triliun per hari." />
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MBG Converter — Bandingkan Asetmu dengan Program Makan Bergizi Gratis" />
+  <meta property="og:description" content="Hitung berapa lama aset impianmu bisa membiayai program Makan Bergizi Gratis (MBG) Indonesia." />
+  <meta property="og:image" content="https://bys2007.github.io/MBG-Converter/og-image.webp" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            brand: {
+              50: '#eef7ff', 100: '#d9edff', 200: '#bce0ff', 300: '#8eceff',
+              400: '#59b2ff', 500: '#3391ff', 600: '#1a6ff5', 700: '#1459e1',
+              800: '#1749b6', 900: '#193f8f', 950: '#142857'
+            },
+            surface: { 800: '#1a1d2e', 900: '#12141f', 950: '#0b0d14' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="favicon/site.webmanifest" />
+  <meta name="theme-color" content="#1a5fd8" />
+
+  <style>
+    /* ===== GLOBAL STYLES ===== */
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #090a16;
+      color: #e2e8f0;
+    }
+
+    /* Gradient background mesh */
+    .bg-mesh {
+      background-color: #090a16;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 10% 18%, rgba(26, 111, 245, 0.15) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 50% at 85% 80%, rgba(124, 58, 237, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 65% 45% at 50% 45%, rgba(49, 46, 129, 0.10) 0%, transparent 50%),
+        radial-gradient(ellipse 45% 35% at 30% 70%, rgba(14, 116, 144, 0.07) 0%, transparent 45%);
+    }
+
+    /* Glassmorphism card - IMPROVED for better contrast */
+    .glass {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1.5px solid rgba(51, 145, 255, 0.25);
+      transition: all 0.3s ease;
+    }
+
+    .glass:hover {
+      border-color: rgba(51, 145, 255, 0.4);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .glass-light {
+      background: rgba(20, 28, 50, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(51, 145, 255, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .glass-light:hover {
+      border-color: rgba(51, 145, 255, 0.25);
+      background: rgba(20, 28, 50, 0.85);
+    }
+
+    /* Animated gradient text */
+    .text-gradient {
+      background: linear-gradient(135deg, #3391ff 0%, #8b5cf6 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-warm {
+      background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Glow effects - ENHANCED */
+    .glow-blue { 
+      box-shadow: 0 0 40px rgba(51, 145, 255, 0.2), 0 0 80px rgba(51, 145, 255, 0.08);
+    }
+    .glow-purple { 
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.2), 0 0 80px rgba(139, 92, 246, 0.08);
+    }
+
+    /* Smooth select/input styling - IMPROVED visibility */
+    select, input[type="number"] {
+      background: rgba(10, 14, 23, 0.9);
+      border: 1.5px solid rgba(51, 145, 255, 0.3);
+      color: #e2e8f0;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    select:hover, input[type="number"]:hover {
+      border-color: rgba(51, 145, 255, 0.5);
+      background: rgba(10, 14, 23, 0.95);
+    }
+    select:focus, input[type="number"]:focus {
+      border-color: rgba(51, 145, 255, 0.8);
+      box-shadow: 0 0 0 3px rgba(51, 145, 255, 0.2), inset 0 0 0 2px rgba(51, 145, 255, 0.1);
+      outline: none;
+    }
+    select option { background: #0f1722; color: #e2e8f0; }
+
+    /* Hide number input arrows */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
+
+    /* Pulse animation */
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    .animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+
+    /* Slide up animation */
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
+
+    /* Number counter animation */
+    @keyframes countUp {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .animate-count { animation: countUp 0.3s ease-out; }
+
+    /* Toast notification */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
+      opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 100;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0d14; }
+    ::-webkit-scrollbar-thumb { background: rgba(51, 145, 255, 0.3); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(51, 145, 255, 0.5); }
+
+    /* Chart canvas */
+    #comparisonChart { max-height: 320px; }
+
+    /* Watermark */
+    .watermark {
+      position: fixed; bottom: 8px; right: 12px;
+      font-size: 0.65rem; color: rgba(255,255,255,0.12);
+      letter-spacing: 0.05em; z-index: 50;
+      pointer-events: none; user-select: none;
+    }
+
+    /* Button styling */
+    button {
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(51, 145, 255, 0.9), rgba(59, 130, 246, 0.8));
+      border: 1.5px solid rgba(51, 145, 255, 0.5);
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, rgba(51, 145, 255, 1), rgba(59, 130, 246, 0.9));
+      border-color: rgba(51, 145, 255, 0.8);
+      box-shadow: 0 0 30px rgba(51, 145, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 0 15px rgba(51, 145, 255, 0.2);
+    }
+
+    /* Card header styling */
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #60a5fa;
+      font-weight: 700;
+      font-size: 1.0625rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1.5px solid rgba(51, 145, 255, 0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Text contrast improvements */
+    .text-bright {
+      color: #f8f9fa;
+      font-weight: 500;
+    }
+
+    .text-muted {
+      color: #94a3b8;
+    }
+  </style>
+</head>
+
+<body class="bg-mesh min-h-screen">
+
+  <!-- ===== TOAST NOTIFICATION ===== -->
+  <div id="toast" class="toast">
+    <div class="glass rounded-xl px-5 py-3 flex items-center gap-3 text-sm font-medium shadow-2xl border border-green-500/20">
+      <i class="fa-solid fa-check-circle text-green-400"></i>
+      <span id="toastMsg">Teks berhasil disalin!</span>
+    </div>
+  </div>
+
+  <!-- ===== WATERMARK ===== -->
+  <div class="watermark">bys.2007</div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="relative pt-10 pb-6 px-4 text-center">
+    <div class="max-w-3xl mx-auto animate-slide-up">
+      <!-- Logo / Icon -->
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-600 to-purple-600 mb-5 shadow-lg shadow-brand-600/20">
+        <i class="fa-solid fa-scale-balanced text-2xl text-white"></i>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-3">
+        <span class="text-gradient">MBG</span> <span class="text-white-400">Converter</span>
+      </h1>
+      <p class="text-slate-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+        Bandingkan nilai asetmu dengan durasi operasional harian program
+        <span class="text-brand-400 font-semibold">Makan Bergizi Gratis</span> yang menelan biaya
+        <span class="text-gradient-warm font-bold">Rp1,2 Triliun/hari</span>.
+      </p>
+      <!-- Status badges -->
+      <div class="flex flex-wrap justify-center gap-2 mt-5">
+        <span id="statusBadge" class="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2.5 rounded-full glass-light text-blue-300 border border-blue-500/30">
+          <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse-soft"></span>
+          Menunggu input...
+        </span>
+        <span id="cacheStatus" class="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2.5 rounded-full glass-light text-slate-300 border border-slate-500/20">
+          <i class="fa-solid fa-database text-[10px]"></i>
+          Cache: —
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="max-w-5xl mx-auto px-4 pb-16 space-y-8">
+
+    <!-- ===== INPUT CARD ===== -->
+    <section class="animate-slide-up" style="animation-delay:.1s">
+      <div class="glass rounded-2xl p-6 md:p-8 glow-blue">
+        <div class="card-header">
+          <div class="card-header-icon">
+            <i class="fa-solid fa-sliders"></i>
+          </div>
+          <h2>Pilih Aset & Jumlah</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Category Dropdown -->
+          <div>
+            <label for="categorySelect" class="block text-xs font-bold text-blue-300 uppercase tracking-widest mb-3">📂 Kategori</label>
+            <select id="categorySelect" class="w-full rounded-xl px-4 py-3 text-sm font-medium cursor-pointer">
+              <option value="" disabled selected>— Pilih Kategori —</option>
+            </select>
+          </div>
+
+          <!-- Item Dropdown -->
+          <div>
+            <label for="itemSelect" class="block text-xs font-bold text-blue-300 uppercase tracking-widest mb-3">🏷️ Item</label>
+            <select id="itemSelect" class="w-full rounded-xl px-4 py-3 text-sm font-medium cursor-pointer" disabled>
+              <option value="" disabled selected>— Pilih Item —</option>
+            </select>
+          </div>
+
+          <!-- Quantity -->
+          <div>
+            <label for="quantityInput" class="block text-xs font-bold text-blue-300 uppercase tracking-widest mb-3">📊 Jumlah</label>
+            <input type="number" id="quantityInput" min="0" step="any" value="1" placeholder="1"
+              class="w-full rounded-xl px-4 py-3 text-sm font-medium" />
+          </div>
+        </div>
+
+        <!-- Loading indicator for API -->
+        <div id="apiLoader" class="hidden mt-4 flex items-center gap-2 text-xs text-brand-400">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          <span>Mengambil harga terbaru...</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== RESULT DISPLAY ===== -->
+    <section id="resultSection" class="hidden animate-slide-up" style="animation-delay:.2s">
+      <div class="glass rounded-2xl p-6 md:p-8 glow-purple">
+        <div class="card-header" style="color: #d8b4fe;">
+          <div class="card-header-icon">
+            <i class="fa-solid fa-calculator"></i>
+          </div>
+          <h2>Hasil Konversi</h2>
+        </div>
+
+        <!-- Total Value -->
+        <div class="text-center mb-10 p-6 rounded-xl glass-light border border-blue-500/20">
+          <p class="text-xs font-bold text-blue-300 uppercase tracking-widest mb-2">💰 Total Nilai Aset</p>
+          <p id="totalValueDisplay" class="text-4xl md:text-5xl font-black text-gradient animate-count">Rp 0</p>
+          <p id="assetDescription" class="text-sm text-slate-300 mt-3 font-medium"></p>
+        </div>
+
+        <!-- Duration Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div class="glass-light rounded-xl p-5 text-center border border-cyan-500/20 hover:border-cyan-500/40 transition-all">
+            <p class="text-xs font-bold text-cyan-300 uppercase tracking-widest mb-2">📅 Hari</p>
+            <p id="daysValue" class="text-3xl font-black text-white">0</p>
+            <p class="text-xs text-cyan-200 mt-2 font-medium">hari MBG</p>
+          </div>
+          <div class="glass-light rounded-xl p-5 text-center border border-emerald-500/20 hover:border-emerald-500/40 transition-all">
+            <p class="text-xs font-bold text-emerald-300 uppercase tracking-widest mb-2">⏰ Jam</p>
+            <p id="hoursValue" class="text-3xl font-black text-white">0</p>
+            <p class="text-xs text-emerald-200 mt-2 font-medium">jam MBG</p>
+          </div>
+          <div class="glass-light rounded-xl p-5 text-center border border-amber-500/20 hover:border-amber-500/40 transition-all">
+            <p class="text-xs font-bold text-amber-300 uppercase tracking-widest mb-2">⏱️ Menit</p>
+            <p id="minutesValue" class="text-3xl font-black text-white">0</p>
+            <p class="text-xs text-amber-200 mt-2 font-medium">menit MBG</p>
+          </div>
+          <div class="glass-light rounded-xl p-5 text-center border border-rose-500/20 hover:border-rose-500/40 transition-all">
+            <p class="text-xs font-bold text-rose-300 uppercase tracking-widest mb-2">⌛ Detik</p>
+            <p id="secondsValue" class="text-3xl font-black text-white">0</p>
+            <p class="text-xs text-rose-200 mt-2 font-medium">detik MBG</p>
+          </div>
+        </div>
+
+        <!-- Best-Fit Duration -->
+        <div class="glass-light rounded-xl p-6 mb-6 text-center border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-pink-500/10">
+          <p class="text-xs font-semibold text-purple-300 mb-2 uppercase tracking-wider">✨ Durasi Setara Program MBG</p>
+          <p id="bestFitDuration" class="text-2xl md:text-3xl font-black text-white">—</p>
+        </div>
+
+        <!-- Fun Fact: Porsi Makanan -->
+        <div class="glass-light rounded-xl p-6 mb-8 flex items-start gap-4 border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-orange-500/5">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0 text-xl">
+            <i class="fa-solid fa-utensils text-amber-300"></i>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-amber-200 uppercase tracking-wider mb-2">🍛 Fun Fact — Porsi Makanan</p>
+            <p id="portionDisplay" class="text-base text-slate-200 leading-relaxed font-medium">—</p>
+          </div>
+        </div>
+
+        <!-- Share Button -->
+        <button id="shareBtn" onclick="copyShareText()"
+          class="btn-primary w-full flex items-center justify-center gap-3 rounded-xl py-4 text-white font-bold text-base cursor-pointer shadow-xl">
+          <i class="fa-solid fa-share-nodes text-lg"></i>
+          <span>Bagikan ke Media Sosial 🚀</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== CHART SECTION ===== -->
+    <section id="chartSection" class="hidden animate-slide-up" style="animation-delay:.3s">
+      <div class="glass rounded-2xl p-6 md:p-8 glow-blue">
+        <div class="card-header" style="color: #4ade80;">
+          <div class="card-header-icon">
+            <i class="fa-solid fa-chart-bar"></i>
+          </div>
+          <h2>Visualisasi Perbandingan</h2>
+        </div>
+        <p class="text-sm text-slate-300 mb-6 font-medium">📊 Perbandingan nilai asetmu vs Anggaran Tahunan MBG (Rp336 Triliun / 280 hari kerja)</p>
+        <div class="relative w-full rounded-xl p-4 bg-gradient-to-b from-slate-800/50 to-slate-900/30" style="max-height:360px;">
+          <canvas id="comparisonChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== QUICK COMPARISON TABLE ===== -->
+    <section class="animate-slide-up" style="animation-delay:.35s">
+      <div class="glass rounded-2xl p-6 md:p-8 glow-purple">
+        <div class="card-header" style="color: #f472b6;">
+          <div class="card-header-icon">
+            <i class="fa-solid fa-list"></i>
+          </div>
+          <h2>Komparasi Instan</h2>
+        </div>
+        <p class="text-sm text-slate-300 mb-6 font-medium">⚡ Berapa lama barang populer bisa membiayai program MBG?</p>
+        <div class="overflow-x-auto rounded-xl border border-white/10">
+          <table class="w-full text-sm">
+            <thead class="bg-gradient-to-r from-slate-800/50 to-slate-900/30 border-b border-white/10">
+              <tr>
+                <th class="text-left py-4 px-4 text-xs font-bold text-blue-300 uppercase tracking-wider">📦 Barang</th>
+                <th class="text-right py-4 px-4 text-xs font-bold text-green-300 uppercase tracking-wider">💰 Harga (est.)</th>
+                <th class="text-right py-4 px-4 text-xs font-bold text-purple-300 uppercase tracking-wider">⏱️ Durasi MBG</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonTableBody" class="divide-y divide-white/5"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="text-center pt-12 pb-6 space-y-5 border-t border-white/5 mt-16">
+      <div class="flex justify-center gap-3">
+        <a href="https://github.com/bys2007" target="_blank" rel="noopener" class="w-11 h-11 rounded-full glass-light border border-white/20 flex items-center justify-center text-slate-300 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all hover:scale-110" title="GitHub">
+          <i class="fa-brands fa-github text-lg"></i>
+        </a>
+        <a href="https://instagram.com/bys.2007" target="_blank" rel="noopener" class="w-11 h-11 rounded-full glass-light border border-pink-500/30 flex items-center justify-center text-pink-300 hover:text-pink-200 hover:border-pink-500/60 hover:bg-pink-500/10 transition-all hover:scale-110" title="Instagram">
+          <i class="fa-brands fa-instagram text-lg"></i>
+        </a>
+        <a href="https://tiktok.com/@bys.2007" target="_blank" rel="noopener" class="w-11 h-11 rounded-full glass-light border border-white/20 flex items-center justify-center text-slate-300 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all hover:scale-110" title="TikTok">
+          <i class="fa-brands fa-tiktok text-lg"></i>
+        </a>
+      </div>
+      <p class="text-sm text-slate-400 leading-relaxed">
+        Dibuat dengan <i class="fa-solid fa-heart text-red-500/70 text-xs"></i> oleh
+        <span class="text-blue-300 font-semibold">bys.2007</span>
+        <br class="hidden sm:block" />
+        <span class="text-xs text-slate-500">📊 Data harga bersifat estimasi &middot; 📋 Bukan saran finansial &middot; 🔄 Update berkala</span>
+      </p>
+    </footer>
+  </main>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+  (() => {
+    'use strict';
+
+    // =====================================================
+    // KONSTANTA UTAMA
+    // =====================================================
+
+    /** Biaya harian MBG: Rp 1.2 Triliun */
+    const MBG_DAILY_COST = 1_200_000_000_000;
+
+    /** Anggaran tahunan MBG (280 hari kerja) */
+    const MBG_ANNUAL_BUDGET = MBG_DAILY_COST * 280;
+
+    /** Harga per porsi makanan */
+    const PORTION_COST = 15_000;
+
+    /** Durasi cache di localStorage (10 menit dalam ms) */
+    const CACHE_TTL = 10 * 60 * 1000;
+
+    // =====================================================
+    // HARDCODED ASSET DATA
+    // Harga dalam IDR (estimasi terbaru)
+    // =====================================================
+
+    const ASSET_DATA = {
+      crypto: {
+        label: '🪙 Cryptocurrency',
+        items: {
+          bitcoin:  { name: 'Bitcoin (BTC)',  price: null, unit: 'koin', icon: 'fa-brands fa-bitcoin', apiId: 'bitcoin' },
+          ethereum: { name: 'Ethereum (ETH)', price: null, unit: 'koin', icon: 'fa-brands fa-ethereum', apiId: 'ethereum' },
+          solana:   { name: 'Solana (SOL)',   price: null, unit: 'koin', icon: 'fa-solid fa-coins', apiId: 'solana' },
+        }
+      },
+      fiat: {
+        label: '💵 Mata Uang Asing (Fiat)',
+        items: {
+          usd: { name: 'Dolar AS (USD)',  price: null, unit: 'USD', icon: 'fa-solid fa-dollar-sign', fiatCode: 'USD' },
+          eur: { name: 'Euro (EUR)',       price: null, unit: 'EUR', icon: 'fa-solid fa-euro-sign', fiatCode: 'EUR' },
+          jpy: { name: 'Yen Jepang (JPY)', price: null, unit: 'JPY', icon: 'fa-solid fa-yen-sign', fiatCode: 'JPY' },
+        }
+      },
+      precious_metals: {
+        label: '🥇 Logam Mulia',
+        items: {
+          gold_gram:   { name: 'Emas (per gram)',     price: 1_850_000,      unit: 'gram', icon: 'fa-solid fa-coins' },
+          gold_kg:     { name: 'Emas (per kg)',        price: 1_850_000_000,  unit: 'kg',   icon: 'fa-solid fa-coins' },
+          silver_gram: { name: 'Perak (per gram)',     price: 20_000,         unit: 'gram', icon: 'fa-solid fa-ring' },
+          platinum:    { name: 'Platinum (per gram)',   price: 510_000,        unit: 'gram', icon: 'fa-solid fa-gem' },
+        }
+      },
+      stocks: {
+        label: '📈 Saham & Indeks',
+        items: {
+          bbca:   { name: 'BCA (BBCA) per lot',    price: 920_000,            unit: 'lot', icon: 'fa-solid fa-building-columns' },
+          bbri:   { name: 'BRI (BBRI) per lot',    price: 390_000,            unit: 'lot', icon: 'fa-solid fa-building-columns' },
+          tlkm:   { name: 'Telkom (TLKM) per lot', price: 260_000,            unit: 'lot', icon: 'fa-solid fa-tower-cell' },
+          goto:   { name: 'GoTo (GOTO) per lot',   price: 6_200,              unit: 'lot', icon: 'fa-solid fa-motorcycle' },
+          apple:  { name: 'Apple (AAPL) per share', price: 3_700_000,         unit: 'share', icon: 'fa-brands fa-apple' },
+          nvidia: { name: 'NVIDIA (NVDA) per share', price: 1_900_000,        unit: 'share', icon: 'fa-solid fa-microchip' },
+          tesla:  { name: 'Tesla (TSLA) per share',  price: 4_200_000,        unit: 'share', icon: 'fa-solid fa-car' },
+        }
+      },
+      property: {
+        label: '🏠 Properti',
+        items: {
+          rumah_subsidi:   { name: 'Rumah Subsidi',            price: 150_000_000,        unit: 'unit', icon: 'fa-solid fa-house' },
+          rumah_menengah:  { name: 'Rumah Menengah Jakarta',   price: 1_500_000_000,      unit: 'unit', icon: 'fa-solid fa-house-chimney' },
+          apartemen_mewah: { name: 'Apartemen Mewah Jakarta',  price: 15_000_000_000,     unit: 'unit', icon: 'fa-solid fa-city' },
+          mansion:         { name: 'Mansion Menteng',           price: 150_000_000_000,    unit: 'unit', icon: 'fa-solid fa-landmark' },
+        }
+      },
+      luxury: {
+        label: '💎 Barang Mewah',
+        items: {
+          iphone16pro:    { name: 'iPhone 16 Pro Max',       price: 28_000_000,         unit: 'unit', icon: 'fa-solid fa-mobile-screen' },
+          macbook_pro:    { name: 'MacBook Pro M4 Max',      price: 65_000_000,         unit: 'unit', icon: 'fa-solid fa-laptop' },
+          rolex_sub:      { name: 'Rolex Submariner',        price: 250_000_000,        unit: 'unit', icon: 'fa-solid fa-clock' },
+          hermes_birkin:  { name: 'Hermès Birkin 30',        price: 500_000_000,        unit: 'unit', icon: 'fa-solid fa-bag-shopping' },
+          rubicon:        { name: 'Jeep Wrangler Rubicon',   price: 1_600_000_000,      unit: 'unit', icon: 'fa-solid fa-truck-monster' },
+          alphard:        { name: 'Toyota Alphard',          price: 1_200_000_000,      unit: 'unit', icon: 'fa-solid fa-van-shuttle' },
+          lamborghini:    { name: 'Lamborghini Huracán',     price: 12_000_000_000,     unit: 'unit', icon: 'fa-solid fa-car-side' },
+          yacht:          { name: 'Yacht Mewah',             price: 80_000_000_000,     unit: 'unit', icon: 'fa-solid fa-ship' },
+          jet_pribadi:    { name: 'Private Jet (Gulfstream)', price: 1_100_000_000_000, unit: 'unit', icon: 'fa-solid fa-plane' },
+        }
+      },
+      salary: {
+        label: '💼 Gaji & Penghasilan',
+        items: {
+          umr_jakarta:  { name: 'UMR DKI Jakarta (bulanan)',       price: 5_067_381,       unit: 'bulan', icon: 'fa-solid fa-money-bill-wave' },
+          gaji_pns:     { name: 'Gaji PNS Gol. III (bulanan)',     price: 4_500_000,       unit: 'bulan', icon: 'fa-solid fa-id-card' },
+          gaji_dpr:     { name: 'Gaji Anggota DPR (bulanan)',      price: 60_000_000,      unit: 'bulan', icon: 'fa-solid fa-landmark-dome' },
+          gaji_presiden:{ name: 'Gaji Presiden RI (bulanan)',      price: 62_000_000,      unit: 'bulan', icon: 'fa-solid fa-flag' },
+          gaji_ceo:     { name: 'Gaji CEO Top BUMN (bulanan)',     price: 500_000_000,     unit: 'bulan', icon: 'fa-solid fa-user-tie' },
+        }
+      }
+    };
+
+    // =====================================================
+    // QUICK COMPARISON TABLE DATA
+    // =====================================================
+
+    const QUICK_COMPARISONS = [
+      { name: '1 Gaji UMR Jakarta', price: 5_067_381,      icon: '💼' },
+      { name: '1 iPhone 16 Pro Max', price: 28_000_000,     icon: '📱' },
+      { name: '1 MacBook Pro M4',   price: 65_000_000,      icon: '💻' },
+      { name: '1 Rolex Submariner', price: 250_000_000,     icon: '⌚' },
+      { name: '1 Hermès Birkin',    price: 500_000_000,     icon: '👜' },
+      { name: '1 Toyota Alphard',   price: 1_200_000_000,   icon: '🚐' },
+      { name: '1 Rubicon',          price: 1_600_000_000,   icon: '🚙' },
+      { name: '1 Lamborghini',      price: 12_000_000_000,  icon: '🏎️' },
+      { name: '1 kg Emas',          price: 1_850_000_000,   icon: '🥇' },
+      { name: '1 Rumah Mewah Menteng', price: 150_000_000_000, icon: '🏛️' },
+      { name: '1 Private Jet',      price: 1_100_000_000_000, icon: '✈️' },
+    ];
+
+    // =====================================================
+    // DOM ELEMENTS
+    // =====================================================
+
+    const categorySelect = document.getElementById('categorySelect');
+    const itemSelect     = document.getElementById('itemSelect');
+    const quantityInput  = document.getElementById('quantityInput');
+    const resultSection  = document.getElementById('resultSection');
+    const chartSection   = document.getElementById('chartSection');
+    const apiLoader      = document.getElementById('apiLoader');
+    const statusBadge    = document.getElementById('statusBadge');
+    const cacheStatusEl  = document.getElementById('cacheStatus');
+
+    let chartInstance = null;
+
+    // =====================================================
+    // CACHE SYSTEM (localStorage with 10-min TTL)
+    // =====================================================
+
+    /**
+     * Ambil data dari cache.
+     * @param {string} key - Cache key
+     * @returns {any|null} Data yang di-cache, atau null jika expired/tidak ada.
+     */
+    function getCache(key) {
+      try {
+        const raw = localStorage.getItem(`mbg_cache_${key}`);
+        if (!raw) return null;
+        const { data, timestamp } = JSON.parse(raw);
+        if (Date.now() - timestamp > CACHE_TTL) {
+          localStorage.removeItem(`mbg_cache_${key}`);
+          return null;
+        }
+        return data;
+      } catch { return null; }
+    }
+
+    /**
+     * Simpan data ke cache.
+     * @param {string} key - Cache key
+     * @param {any} data - Data yang akan disimpan
+     */
+    function setCache(key, data) {
+      try {
+        localStorage.setItem(`mbg_cache_${key}`, JSON.stringify({ data, timestamp: Date.now() }));
+      } catch { /* localStorage full, ignore */ }
+    }
+
+    function updateCacheStatus(status) {
+      cacheStatusEl.innerHTML = `<i class="fa-solid fa-database text-[10px]"></i> Cache: ${status}`;
+    }
+
+    // =====================================================
+    // API FUNCTIONS
+    // =====================================================
+
+    /**
+     * Fetch harga crypto dari CoinGecko API.
+     * Mengambil harga BTC, ETH, SOL dalam IDR.
+     * Cache selama 10 menit.
+     */
+    async function fetchCryptoPrices() {
+      const cacheKey = 'crypto_prices';
+      const cached = getCache(cacheKey);
+      if (cached) {
+        updateCacheStatus('Hit ✓');
+        return cached;
+      }
+
+      apiLoader.classList.remove('hidden');
+      try {
+        const ids = 'bitcoin,ethereum,solana';
+        const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=idr`);
+        if (!res.ok) throw new Error('CoinGecko API error');
+        const data = await res.json();
+
+        // Format: { bitcoin: { idr: 123 }, ... }
+        const prices = {};
+        for (const [id, val] of Object.entries(data)) {
+          prices[id] = val.idr;
+        }
+        setCache(cacheKey, prices);
+        updateCacheStatus('Miss → Fetched');
+        return prices;
+      } catch (err) {
+        console.warn('CoinGecko fetch failed, using fallback:', err);
+        // Fallback harga estimasi jika API gagal
+        const fallback = { bitcoin: 1_650_000_000, ethereum: 30_000_000, solana: 2_200_000 };
+        updateCacheStatus('API Error — Fallback');
+        return fallback;
+      } finally {
+        apiLoader.classList.add('hidden');
+      }
+    }
+
+    /**
+     * Fetch kurs mata uang asing ke IDR dari ExchangeRate-API.
+     * Cache selama 10 menit.
+     */
+    async function fetchFiatRates() {
+      const cacheKey = 'fiat_rates';
+      const cached = getCache(cacheKey);
+      if (cached) {
+        updateCacheStatus('Hit ✓');
+        return cached;
+      }
+
+      apiLoader.classList.remove('hidden');
+      try {
+        const res = await fetch('https://open.er-api.com/v6/latest/IDR');
+        if (!res.ok) throw new Error('ExchangeRate API error');
+        const data = await res.json();
+
+        // rates berisi IDR→X, kita perlu X→IDR = 1/rate
+        const rates = {};
+        const targets = ['USD', 'EUR', 'JPY'];
+        for (const code of targets) {
+          if (data.rates[code]) {
+            rates[code] = 1 / data.rates[code]; // 1 unit foreign currency = X IDR
+          }
+        }
+        setCache(cacheKey, rates);
+        updateCacheStatus('Miss → Fetched');
+        return rates;
+      } catch (err) {
+        console.warn('ExchangeRate fetch failed, using fallback:', err);
+        const fallback = { USD: 16_500, EUR: 18_000, JPY: 110 };
+        updateCacheStatus('API Error — Fallback');
+        return fallback;
+      } finally {
+        apiLoader.classList.add('hidden');
+      }
+    }
+
+    // =====================================================
+    // FORMATTING HELPERS
+    // =====================================================
+
+    /** Format angka ke Rupiah */
+    function formatRupiah(num) {
+      if (num >= 1e15) return 'Rp' + (num / 1e12).toFixed(1).replace('.', ',') + ' Kuadriliun';
+      if (num >= 1e12) return 'Rp' + (num / 1e12).toFixed(2).replace('.', ',') + ' Triliun';
+      if (num >= 1e9)  return 'Rp' + (num / 1e9).toFixed(2).replace('.', ',')  + ' Miliar';
+      if (num >= 1e6)  return 'Rp' + (num / 1e6).toFixed(2).replace('.', ',')  + ' Juta';
+      return 'Rp' + num.toLocaleString('id-ID');
+    }
+
+    /** Format angka ke Rupiah penuh */
+    function formatRupiahFull(num) {
+      return 'Rp' + Math.round(num).toLocaleString('id-ID');
+    }
+
+    /** Format angka biasa dengan separator */
+    function formatNumber(num) {
+      if (Number.isInteger(num)) return num.toLocaleString('id-ID');
+      return num.toLocaleString('id-ID', { maximumFractionDigits: 2 });
+    }
+
+    /**
+     * Konversi durasi hari ke format manusia yang mudah dipahami.
+     * Jika < 1 detik → milidetik, < 1 menit → detik, dsb.
+     */
+    function humanizeDuration(days) {
+      if (days >= 365) {
+        const years = days / 365;
+        return `${formatNumber(years)} tahun`;
+      }
+      if (days >= 1) return `${formatNumber(days)} hari`;
+
+      const hours = days * 24;
+      if (hours >= 1) return `${formatNumber(hours)} jam`;
+
+      const minutes = hours * 60;
+      if (minutes >= 1) return `${formatNumber(minutes)} menit`;
+
+      const seconds = minutes * 60;
+      if (seconds >= 0.01) return `${formatNumber(seconds)} detik`;
+
+      const ms = seconds * 1000;
+      return `${formatNumber(ms)} milidetik`;
+    }
+
+    /** Konversi durasi ke format pendek untuk tabel */
+    function humanizeDurationShort(days) {
+      if (days >= 365) return `~${(days/365).toFixed(1)} thn`;
+      if (days >= 1) return `~${days.toFixed(1)} hari`;
+      const hours = days * 24;
+      if (hours >= 1) return `~${hours.toFixed(1)} jam`;
+      const minutes = hours * 60;
+      if (minutes >= 1) return `~${minutes.toFixed(1)} mnt`;
+      const seconds = minutes * 60;
+      if (seconds >= 0.01) return `~${seconds.toFixed(2)} dtk`;
+      const ms = seconds * 1000;
+      return `~${ms.toFixed(2)} ms`;
+    }
+
+    // =====================================================
+    // POPULATE UI
+    // =====================================================
+
+    /** Populate category dropdown */
+    function populateCategories() {
+      for (const [key, cat] of Object.entries(ASSET_DATA)) {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = cat.label;
+        categorySelect.appendChild(opt);
+      }
+    }
+
+    /** Populate item dropdown berdasarkan kategori terpilih */
+    function populateItems(categoryKey) {
+      itemSelect.innerHTML = '<option value="" disabled selected>— Pilih Item —</option>';
+      const cat = ASSET_DATA[categoryKey];
+      if (!cat) return;
+
+      for (const [key, item] of Object.entries(cat.items)) {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = item.name;
+        itemSelect.appendChild(opt);
+      }
+      itemSelect.disabled = false;
+    }
+
+    /** Build the quick comparison table */
+    function buildComparisonTable() {
+      const tbody = document.getElementById('comparisonTableBody');
+      tbody.innerHTML = '';
+
+      for (const item of QUICK_COMPARISONS) {
+        const days = item.price / MBG_DAILY_COST;
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-white/[0.06] transition-colors hover:border-blue-500/30';
+        tr.innerHTML = `
+          <td class="py-4 px-4 font-semibold text-blue-100">${item.icon} ${item.name}</td>
+          <td class="py-4 px-4 text-right text-emerald-300 font-medium">${formatRupiah(item.price)}</td>
+          <td class="py-4 px-4 text-right font-bold text-purple-300 text-base">${humanizeDurationShort(days)}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    // =====================================================
+    // CORE CALCULATION & DISPLAY
+    // =====================================================
+
+    /**
+     * Kalkulasi utama: hitung total nilai aset, durasi MBG, porsi makanan.
+     * Dipanggil setiap kali input berubah.
+     */
+    async function calculate() {
+      const catKey  = categorySelect.value;
+      const itemKey = itemSelect.value;
+      const qty     = parseFloat(quantityInput.value) || 0;
+
+      if (!catKey || !itemKey || qty <= 0) {
+        resultSection.classList.add('hidden');
+        chartSection.classList.add('hidden');
+        updateStatus('Menunggu input...', 'slate');
+        return;
+      }
+
+      const cat  = ASSET_DATA[catKey];
+      const item = cat.items[itemKey];
+      let priceIDR = item.price;
+
+      // ----- Fetch harga real-time untuk crypto -----
+      if (catKey === 'crypto' && item.apiId) {
+        updateStatus('Mengambil harga crypto...', 'blue');
+        const prices = await fetchCryptoPrices();
+        priceIDR = prices[item.apiId] || 0;
+        // Update harga di data agar tampil konsisten
+        item.price = priceIDR;
+      }
+
+      // ----- Fetch kurs untuk fiat -----
+      if (catKey === 'fiat' && item.fiatCode) {
+        updateStatus('Mengambil kurs mata uang...', 'blue');
+        const rates = await fetchFiatRates();
+        priceIDR = rates[item.fiatCode] || 0;
+        item.price = priceIDR;
+      }
+
+      if (!priceIDR || priceIDR <= 0) {
+        updateStatus('Harga tidak tersedia', 'red');
+        return;
+      }
+
+      // ===== RUMUS PERHITUNGAN =====
+      const totalValue = priceIDR * qty;
+      const durationDays = totalValue / MBG_DAILY_COST;
+      const durationHours = durationDays * 24;
+      const durationMinutes = durationHours * 60;
+      const durationSeconds = durationMinutes * 60;
+      const totalPortions = Math.floor(totalValue / PORTION_COST);
+
+      // ===== UPDATE UI =====
+      resultSection.classList.remove('hidden');
+      chartSection.classList.remove('hidden');
+
+      // Total Value
+      document.getElementById('totalValueDisplay').textContent = formatRupiahFull(totalValue);
+      document.getElementById('assetDescription').textContent =
+        `${formatNumber(qty)} ${item.unit} ${item.name} × ${formatRupiah(priceIDR)}/${item.unit}`;
+
+      // Duration cards
+      document.getElementById('daysValue').textContent    = formatNumber(Math.floor(durationDays));
+      document.getElementById('hoursValue').textContent   = formatNumber(Math.floor(durationHours));
+      document.getElementById('minutesValue').textContent = formatNumber(Math.floor(durationMinutes));
+      document.getElementById('secondsValue').textContent = formatNumber(Math.floor(durationSeconds));
+
+      // Best fit
+      document.getElementById('bestFitDuration').textContent = `⏱️ ${humanizeDuration(durationDays)}`;
+
+      // Fun fact: porsi
+      document.getElementById('portionDisplay').innerHTML =
+        `Nilai asetmu setara dengan <span class="font-bold text-amber-300">${totalPortions.toLocaleString('id-ID')}</span> porsi makanan bergizi (@ Rp15.000). ` +
+        `Itu bisa memberi makan <span class="font-bold text-amber-300">${Math.floor(totalPortions / 3).toLocaleString('id-ID')}</span> orang selama 1 hari (3x makan)! 🍛`;
+
+      // Status
+      updateStatus('Perhitungan selesai ✓', 'green');
+
+      // Chart
+      renderChart(totalValue, item.name, qty);
+
+      // Scroll to results on mobile
+      if (window.innerWidth < 768) {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function updateStatus(text, color) {
+      const colors = {
+        slate: 'bg-slate-500', blue: 'bg-blue-500', green: 'bg-emerald-500', red: 'bg-red-500'
+      };
+      statusBadge.innerHTML = `
+        <span class="w-1.5 h-1.5 rounded-full ${colors[color] || colors.slate} ${color === 'blue' ? 'animate-pulse-soft' : ''}"></span>
+        ${text}
+      `;
+    }
+
+    // =====================================================
+    // CHART.JS VISUALIZATION
+    // =====================================================
+
+    function renderChart(totalValue, itemName, qty) {
+      const ctx = document.getElementById('comparisonChart');
+
+      if (chartInstance) chartInstance.destroy();
+
+      const labels  = [`${qty > 1 ? qty+'x ' : ''}${itemName}`, 'Anggaran Tahunan MBG'];
+      const values  = [totalValue, MBG_ANNUAL_BUDGET];
+      const percent = ((totalValue / MBG_ANNUAL_BUDGET) * 100);
+
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Nilai (Rupiah)',
+            data: values,
+            backgroundColor: [
+              'rgba(139, 92, 246, 0.7)',  // purple
+              'rgba(51, 145, 255, 0.7)',  // blue
+            ],
+            borderColor: [
+              'rgba(139, 92, 246, 1)',
+              'rgba(51, 145, 255, 1)',
+            ],
+            borderWidth: 2,
+            borderRadius: 8,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          indexAxis: 'y',
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: ctx => formatRupiah(ctx.raw)
+              },
+              backgroundColor: 'rgba(26,29,46,0.95)',
+              titleColor: '#e2e8f0',
+              bodyColor: '#94a3b8',
+              borderColor: 'rgba(255,255,255,0.06)',
+              borderWidth: 1,
+              padding: 12,
+              cornerRadius: 8,
+            },
+            title: {
+              display: true,
+              text: totalValue >= MBG_ANNUAL_BUDGET
+                ? `Asetmu = ${percent.toFixed(1)}% anggaran tahunan MBG 🔥`
+                : `Asetmu = ${percent < 0.01 ? '<0.01' : percent.toFixed(4)}% anggaran tahunan MBG`,
+              color: '#94a3b8',
+              font: { size: 12, weight: '500' },
+              padding: { bottom: 16 }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255,255,255,0.04)' },
+              ticks: {
+                color: '#64748b',
+                font: { size: 10 },
+                callback: v => {
+                  if (v >= 1e12) return (v/1e12).toFixed(0) + 'T';
+                  if (v >= 1e9)  return (v/1e9).toFixed(0) + 'M';
+                  if (v >= 1e6)  return (v/1e6).toFixed(0) + 'Jt';
+                  return v;
+                }
+              }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { color: '#94a3b8', font: { size: 11, weight: '600' } }
+            }
+          }
+        }
+      });
+    }
+
+    // =====================================================
+    // SOCIAL SHARE (Copy to Clipboard)
+    // =====================================================
+
+    /**
+     * Generate teks share dengan gaya gaul & puitis,
+     * lalu copy ke clipboard.
+     */
+    window.copyShareText = function() {
+      const catKey  = categorySelect.value;
+      const itemKey = itemSelect.value;
+      const qty     = parseFloat(quantityInput.value) || 0;
+
+      if (!catKey || !itemKey || qty <= 0) return;
+
+      const item = ASSET_DATA[catKey].items[itemKey];
+      const total = item.price * qty;
+      const days  = total / MBG_DAILY_COST;
+      const duration = humanizeDuration(days);
+
+      // Ambil current URL dari browser (bersihkan trailing params/hash jika ada)
+      const currentUrl = window.location.origin + window.location.pathname;
+
+      // Variasi teks share
+      const templates = [
+        `🔥 Ternyata ${qty > 1 ? qty + 'x ' : ''}${item.name} impianku seharga ${formatRupiah(total)} cuma sanggup ngebiayain program MBG selama ${duration}! Cek aset lo di MBG Converter! 🍽️\n\nCobain di mari 👇\n${currentUrl}`,
+        `😱 Gila! ${qty > 1 ? qty + ' ' : ''}${item.name} senilai ${formatRupiah(total)} itu cuma bisa ngasih Makan Bergizi Gratis selama ${duration}. Program MBG itu Rp1,2 Triliun PER HARI, bro! 🤯\n\nCek sendiri aset lo 👇\n${currentUrl}`,
+        `💡 Fun fact: ${qty > 1 ? qty + 'x ' : ''}${item.name} (${formatRupiah(total)}) = ${duration} program Makan Bergizi Gratis. Bayangin Rp1,2T per hari untuk ngebarin makan gratis se-Indonesia! 🇮🇩\n\nHitung punyamu 👇\n${currentUrl}`,
+      ];
+
+      const text = templates[Math.floor(Math.random() * templates.length)];
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Teks berhasil disalin ke clipboard! 📋');
+      }).catch(() => {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('Teks berhasil disalin! 📋');
+      });
+    };
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // =====================================================
+    // EVENT LISTENERS
+    // =====================================================
+
+    categorySelect.addEventListener('change', () => {
+      populateItems(categorySelect.value);
+      itemSelect.value = '';
+      resultSection.classList.add('hidden');
+      chartSection.classList.add('hidden');
+      updateStatus('Pilih item...', 'slate');
+    });
+
+    itemSelect.addEventListener('change', () => calculate());
+    quantityInput.addEventListener('input', () => {
+      // Debounce untuk input angka
+      clearTimeout(quantityInput._debounce);
+      quantityInput._debounce = setTimeout(() => calculate(), 200);
+    });
+
+    // =====================================================
+    // INIT
+    // =====================================================
+
+    populateCategories();
+    buildComparisonTable();
+
+  })();
+  </script>
+</body>
+</html>
